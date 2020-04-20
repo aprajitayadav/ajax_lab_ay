@@ -3,7 +3,6 @@
 $("#button1").click(function(){
 $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts', function(x){
 	x.forEach(function(){
-	//console.log(data);
 	let p = $('<p></p>');
 	p.text(JSON.stringify(x));
 	$('body').append(p);
@@ -15,7 +14,6 @@ $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',
 $("#button2").click(function(){
 $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',{id: 10}, function(x1){
 	x1.forEach(function(){
-	//console.log(data);
 	let p = $('<p></p>');
 	p.text(JSON.stringify(x1));
 	$('body').append(p);
@@ -28,7 +26,6 @@ $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',
 $("#button3").click(function(){
 $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/comments',{id: 12}, function(x2){
 	x2.forEach(function(){
-	//console.log(data);
 	let p = $('<p></p>');
 	p.text(JSON.stringify(x2));
 	$('body').append(p);
@@ -40,7 +37,6 @@ $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/comment
 $("#button4").click(function(){
 $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',{id: 2}, function(x3){
 	x3.forEach(function(){
-	//console.log(data);
 	let p = $('<p></p>');
 	p.text(JSON.stringify(x3));
 	$('body').append(p);
@@ -50,47 +46,76 @@ $.get('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',
 
 // 5) Create a new post and log the id generated for it by the server
 $("#button5").click(function(){
-	var postTitle = "posting a new post for testing";
-$.post('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',{title:postTitle}, 
-	function(x4){
-	//x4.forEach(function(){
-	console.log(x4);
-	//let p = $('<p></p>');
-	//p.text(JSON.stringify(x4));
-	//$('body').append(p);
+	$.ajax({
+    method: 'POST',
+    url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',
+    data: {
+        userId: 1,
+        title: "New post",
+        body: "New id generated"
+    },
+    complete:function(data){
+	var p=$('<p></p>');
+                p.text(JSON.stringify(data));
+                //p.text(data.id);
+                //console.log(data);
+                //$('body').append('<p> id:' +data.id +'</p>');
+                $('body').append(p);
+    //})
+            }
+    })
 })
-})
-//})
 
-// 6) Replace the post with id of 12
+// 6) Replace the post with id of 14
 $("#button6").click(function(){
-$.Post('https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts',{id: 12}, function(x6){
-	x6.forEach(function(){
-	//console.log(data);
-	let p = $('<p></p>');
-	p.text(JSON.stringify(x6));
-	$('body').append(p);
-})
+$.ajax({
+	method: 'PUT',
+	url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts/14',
+	data: {
+		userId: 1,
+		title: "Replace it",
+		body: "Post got replaced"
+	},
+	complete: function(response){
+		var p=$('<p></p>')
+		p.text(JSON.stringify(response));
+		$('body').append(p);
+	//complete: function(response){
+		//console.log(response.responseJSON);
+	}
 })
 })
 
-// 7) Update the title field of the post with id of 12
+// 7) Update the title field of the post with id of 14
+$("#button7").click(function(){
 $.ajax({
 	method: 'PATCH',
-	url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts/12',
+	url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts/14',
 	data: {
-title: "patched it"
+title: "Patched it"
 },
 	complete: function(response){
-		console.log(response.responseJSON);
+		var p=$('<p></p>')
+		p.text(JSON.stringify(response));
+		$('body').append(p);
+		//console.log(response.responseJSON);
 	}
 })
+})
 
-// 8) Delete the post with id of 12
+// 8) Delete the post with id of 14
+$("#button8").click(function(){
 $.ajax({
 	method: 'DELETE',
-	url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts/12',
+	url: 'https://my-json-server.typicode.com/zachhall/WIN2020_AjaxPromises/posts/14',
+	data: {
+title: "Delete it"
+},
 	complete: function(response){
-		console.log(response.statusText);
+		var p=$('<p></p>')
+		p.text(JSON.stringify(response));
+		$('body').append(p);
+		//console.log(response.statusText);
 	}
+})
 })
